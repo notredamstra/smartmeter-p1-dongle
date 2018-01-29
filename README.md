@@ -3,7 +3,7 @@ Read real-time energy data from ESMR 5.0 smart meter and write it to an external
 
 ## Hardware used to read smart meter
 * Raspberry Pi 3B 
-* USB - RJ11 (cable bought at [Dutch webshop](https://www.sossolutions.nl/slimme-meter-kabel?gclid=CjwKCAiAqbvTBRAPEiwANEkyCEnNKpPhHju9uXXN2DHgt3lLaOfotyFa6OEJdMGqX0M63YfPuXcQERoChlAQAvD_BwE "SOS Solutions")) 
+* USB - RJ11 cable (bought at [Dutch webshop](https://www.sossolutions.nl/slimme-meter-kabel?gclid=CjwKCAiAqbvTBRAPEiwANEkyCEnNKpPhHju9uXXN2DHgt3lLaOfotyFa6OEJdMGqX0M63YfPuXcQERoChlAQAvD_BwE "SOS Solutions"))
 
 ## Getting started
 1. Clone this repository
