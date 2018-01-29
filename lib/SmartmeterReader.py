@@ -2,10 +2,9 @@ import serial, sys, config
 import sqlite3 as db
 
 class SmartmeterReader:
-    def __init__(self, port, SM_Processor, baudrate=115200, timeout=5):
+    def __init__(self, port, baudrate=115200, timeout=5):
         self.port = serial.Serial(port=port, baudrate=baudrate,
                                   timeout=timeout, writeTimeout=timeout)
-        self.SM_Processor = SM_Processor
         self.snapshot = {
             'meter_model': None,
             'meter_id': None,
