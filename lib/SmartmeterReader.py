@@ -1,5 +1,5 @@
-import serial, sys, config
 import sqlite3 as db
+import serial, sys, config.config
 
 class SmartmeterReader:
     def __init__(self, port, baudrate=115200, timeout=5):
@@ -69,7 +69,7 @@ class SmartmeterReader:
     def save_snapshot(self, snapshot):
         conn = db.connect(config.DB_PATH)
         cur = conn.cursor()
-        cur.execute("INSERT INTO "+config.DB_TABLE_NAME+" VALUES((?), (?), (?), (?), (?), (?), (?), (?), (?), (?) 0)",
+        cur.execute("INSERT INTO " + config.DB_TABLE_NAME + " VALUES((?), (?), (?), (?), (?), (?), (?), (?), (?), (?) 0)",
                     (
                         snapshot['meter_model'],
                         snapshot['meter_id'],

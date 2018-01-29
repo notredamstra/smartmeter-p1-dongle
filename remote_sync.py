@@ -1,12 +1,10 @@
-import requests
 import sqlite3 as db
-import time
-import config
+import time, requests, config.config
 
 while True:
     conn = db.connect(config.DB_PATH)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM "+config.DB_TABLE_NAME+" WHERE s=0")
+    cur.execute("SELECT * FROM " + config.DB_TABLE_NAME + " WHERE s=0")
     rows = cur.fetchall()
 
     entries = []
@@ -42,7 +40,7 @@ while True:
         timestampIds = []
         for entry in entries:
             timestampIds.append(entry['tst_reading'])
-        query = "UPDATE "+config.DB_TABLE_NAME+" SET s=1 WHERE t in %s" % str(tuple(timestampIds))
+        query = "UPDATE " + config.DB_TABLE_NAME + " SET s=1 WHERE t in %s" % str(tuple(timestampIds))
         cur.execute(query)
         conn.commit()
 

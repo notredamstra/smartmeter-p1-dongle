@@ -1,5 +1,4 @@
 import os.path
-import serial
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_NAME = "example.db"
