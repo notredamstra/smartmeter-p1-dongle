@@ -85,3 +85,4 @@ class SmartmeterReader:
                         0
                     ))
         conn.commit()
+        conn.close()
