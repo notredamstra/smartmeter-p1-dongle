@@ -4,6 +4,7 @@ import serial
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DB_NAME = "example.db"
 DB_PATH = os.path.join(BASE_DIR, DB_NAME)
+DB_TABLE_NAME = "snapshots"
 
 # set serial port config
 SERIAL_BAUDRATE = 115200

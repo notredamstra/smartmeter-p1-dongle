@@ -70,7 +70,7 @@ class SmartmeterReader:
     def save_snapshot(self, snapshot):
         conn = db.connect(config.DB_PATH)
         cur = conn.cursor()
-        cur.execute("INSERT INTO snapshots VALUES((?), (?), (?), (?), (?), (?), (?), (?), (?), (?) 0)",
+        cur.execute("INSERT INTO "+config.DB_TABLE_NAME+" VALUES((?), (?), (?), (?), (?), (?), (?), (?), (?), (?) 0)",
                     (
                         snapshot['meter_model'],
                         snapshot['meter_id'],
