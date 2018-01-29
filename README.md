@@ -31,4 +31,6 @@ SERIAL_PORT = "/dev/ttyUSB0" <-- This depends on the USB port connected to the s
 # API endpoint
 API_ENDPOINT = "https://example-api/v1/endpoint" <-- This setup sends energy data to an external API
 ```
+4. Run `meter_listener.py` as a background service. The script will continously read the P1-port on the smart meter and process the energy data.
 
+5. Run `remote_sync.py` as a background service. This script will search the SQLite database for new entries and send them to the remote API.
