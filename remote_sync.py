@@ -1,5 +1,6 @@
+import requests
 import sqlite3 as db
-import time, requests, config.config
+import time, config
 
 while True:
     conn = db.connect(config.DB_PATH)

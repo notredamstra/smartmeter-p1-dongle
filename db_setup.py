@@ -1,5 +1,7 @@
-import config, sqlite3
 from sqlite3 import Error
+
+import config
+import sqlite3
 
 if __name__ == "__main__":
     try:
@@ -19,6 +21,8 @@ if __name__ == "__main__":
          s integer
         );
         """
+        cursor = conn.cursor()
+        cursor.execute(create_table_sql)
     except Error as e:
         print(e)
     finally:

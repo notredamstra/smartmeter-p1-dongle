@@ -1,10 +1,19 @@
 import sqlite3 as db
-import serial, sys, config.config
+
+import serial
+import sys
+
+import config
+
 
 class SmartmeterReader:
     def __init__(self, port, baudrate=115200, timeout=5):
-        self.port = serial.Serial(port=port, baudrate=baudrate,
+        try:
+            self.port = serial.Serial(port=port, baudrate=baudrate,
                                   timeout=timeout, writeTimeout=timeout)
+        except:
+            sys.exit("Error opening port %s" % self.port.name)
+
         self.snapshot = {
             'meter_model': None,
             'meter_id': None,
@@ -18,13 +27,6 @@ class SmartmeterReader:
             'tst_reading': None
         }
 
-    def open(self):
-        # open connection to the serial port
-        try:
-            self.port.open()
-        except:
-            sys.exit("Error opening port %s" % self.port.name)
-
     def close(self):
         # close connection to the serial port
         self.port.close()
@@ -35,12 +37,14 @@ class SmartmeterReader:
 
     def listen(self):
         # start listening to serial port
-        self.open()
         while True:
             output = self.read()
             self.compose_snapshot(output)
 
     def compose_snapshot(self, output):
+        if not output:
+            return
+
         if output[0] == '/':
             self.snapshot['meter_model'] = output[1:]
         elif output[0:10] == '0-0:96.1.1':
