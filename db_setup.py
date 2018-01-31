@@ -8,16 +8,17 @@ if __name__ == "__main__":
         conn = sqlite3.connect(config.DB_PATH)
         create_table_sql = """
         CREATE TABLE IF NOT EXISTS snapshots (
-         meter_model text NOT NULL,
-         meter_id text NOT NULL,
-         offpeak_consumption text NOT NULL,
-         peak_consumption text NOT NULL,
-         offpeak_redelivery text NOT NULL,
-         peak_redelivery text NOT NULL,
-         live_usage text NOT NULL,
-         live_redelivery text NOT NULL,
-         gas_consumption text NOT NULL,
-         tst_reading text NOT NULL,
+         meter_model text ,
+         meter_id text ,
+         offpeak_consumption text ,
+         peak_consumption text ,
+         offpeak_redelivery text ,
+         peak_redelivery text ,
+         live_usage text ,
+         live_redelivery text ,
+         gas_consumption text ,
+         tst_reading_electricity text ,
+         tst_reading_gas text ,
          s integer
         );
         """
