@@ -1,5 +1,6 @@
+import requests
 import sqlite3 as db
-import time, requests, config.config
+import time, config
 
 while True:
     conn = db.connect(config.DB_PATH)
@@ -20,7 +21,8 @@ while True:
             'live_usage': row[6],
             'live_redelivery': row[7],
             'gas_consumption': row[8],
-            'tst_reading': row[9]
+            'tst_reading_electricity': row[9],
+            'tst_reading_gas': row[10],
         }
         entries.append(entry)
 
@@ -31,7 +33,8 @@ while True:
     # send request
     try:
         result = requests.post(config.API_ENDPOINT, json=data)
-    except requests.exceptions.ConnectionError:
+    except Exception, e:
+        print e
         time.sleep(2)
         continue
 
@@ -39,9 +42,13 @@ while True:
     if(result.status_code == 201):
         timestampIds = []
         for entry in entries:
-            timestampIds.append(entry['tst_reading'])
-        query = "UPDATE " + config.DB_TABLE_NAME + " SET s=1 WHERE t in %s" % str(tuple(timestampIds))
-        cur.execute(query)
+            timestampIds.append(entry['tst_reading_electricity'])
+        query = "UPDATE " + config.DB_TABLE_NAME + " SET s=1 WHERE tst_reading_electricity in %s" % str(tuple(timestampIds))
+        print query
+        try:
+            cur.execute(query)
+        except Exception, e:
+            print e
         conn.commit()
 
     conn.close()
