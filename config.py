@@ -13,4 +13,4 @@ SERIAL_TIMEOUT = 20
 SERIAL_PORT = "/dev/ttyUSB0"
 
 # API endpoint
-API_ENDPOINT = "http://peen-api.kevindamstra.nl/v1/usage/entries"
+API_ENDPOINT = "http://peen-api.kevindamstra.nl/v1/snapshots"
