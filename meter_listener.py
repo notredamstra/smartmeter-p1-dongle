@@ -1,4 +1,4 @@
-import config.config
+import config
 from lib.SmartmeterReader import SmartmeterReader
 
 reader = SmartmeterReader(config.SERIAL_PORT)
