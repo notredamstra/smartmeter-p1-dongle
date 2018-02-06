@@ -21,8 +21,8 @@ while True:
             'live_usage': row[6],
             'live_redelivery': row[7],
             'gas_consumption': row[8],
-            'tst_reading_electricity': row[9],
-            'tst_reading_gas': row[10],
+            'tst_reading_electricity': int(row[9]),
+            'tst_reading_gas': int(row[10])
         }
         entries.append(entry)
 
@@ -33,6 +33,7 @@ while True:
     # send request
     try:
         result = requests.post(config.API_ENDPOINT, json=data)
+        print result
     except Exception, e:
         print e
         time.sleep(2)
@@ -42,14 +43,15 @@ while True:
     if(result.status_code == 201):
         timestampIds = []
         for entry in entries:
-            timestampIds.append(entry['tst_reading_electricity'])
+            timestampIds.append(str(entry['tst_reading_electricity']).strip("L"))
         query = "UPDATE " + config.DB_TABLE_NAME + " SET s=1 WHERE tst_reading_electricity in %s" % str(tuple(timestampIds))
         print query
         try:
             cur.execute(query)
+            print "Rows updated %s", cur.rowcount
         except Exception, e:
             print e
         conn.commit()
 
     conn.close()
-    time.sleep(10)
+    time.sleep(30)
