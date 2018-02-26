@@ -5,8 +5,11 @@ import time, config
 while True:
     conn = db.connect(config.DB_PATH)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM " + config.DB_TABLE_NAME + " WHERE s=0")
-    rows = cur.fetchall()
+    try:
+        cur.execute("SELECT * FROM " + config.DB_TABLE_NAME + " WHERE s=0")
+        rows = cur.fetchall()
+    except db.OperationalError:
+        continue
 
     entries = []
 
@@ -22,7 +25,7 @@ while True:
             'live_redelivery': row[7],
             'gas_consumption': row[8],
             'tst_reading_electricity': row[9],
-            'tst_reading_gas': row[10],
+            'tst_reading_gas': row[10]
         }
         entries.append(entry)
 
