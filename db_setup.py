@@ -10,15 +10,15 @@ if __name__ == "__main__":
         CREATE TABLE IF NOT EXISTS snapshots (
          meter_model text ,
          meter_id text ,
-         offpeak_consumption text ,
-         peak_consumption text ,
-         offpeak_redelivery text ,
-         peak_redelivery text ,
-         live_usage text ,
-         live_redelivery text ,
-         gas_consumption text ,
-         tst_reading_electricity text ,
-         tst_reading_gas text ,
+         offpeak_consumption real ,
+         peak_consumption real ,
+         offpeak_redelivery real ,
+         peak_redelivery real ,
+         live_usage real ,
+         live_redelivery real ,
+         gas_consumption real ,
+         tst_reading_electricity integer ,
+         tst_reading_gas integer ,
          s integer
         );
         """

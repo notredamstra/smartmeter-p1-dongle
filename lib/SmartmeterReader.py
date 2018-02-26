@@ -46,32 +46,35 @@ class SmartmeterReader:
         if not output:
             return
 
-        if output[0] == '/':
-            self.snapshot['meter_model'] = output[1:]
-        elif output[0:10] == '0-0:96.1.1':
-            self.snapshot['meter_id'] = output[output.find("(")+1:output.find(")")].split('*')[0]
-        elif output[0:9] == '1-0:1.8.1':
-            self.snapshot['offpeak_consumption'] = float(output[output.find("(")+1:output.find(")")].split('*')[0])
-        elif output[0:9] == '1-0:1.8.2':
-            self.snapshot['peak_consumption'] = float(output[output.find("(")+1:output.find(")")].split('*')[0])
-        elif output[0:9] == '1-0:2.8.1':
-            self.snapshot['offpeak_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
-        elif output[0:9] == '1-0:2.8.2':
-            self.snapshot['peak_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
-        elif output[0:9] == '1-0:1.7.0':
-            self.snapshot['live_usage'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
-        elif output[0:9] == '1-0:2.7.0':
-            self.snapshot['live_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
-        elif output[0:10] == '0-1:24.2.1':
-            parts = re.findall(r"\(([A-Za-z0-9_*.]+)\)", output)
-            self.snapshot['tst_reading_gas'] = parts[0][parts[0].find("(") + 1:parts[0].find(")")].split('W')[0]
-            self.snapshot['gas_consumption'] = float(parts[1][parts[1].find("(") + 1:parts[1].find(")")].split('*')[0])
-        elif output[0:9] == '0-0:1.0.0':
-            self.snapshot['tst_reading_electricity'] = output[output.find("(") + 1:output.find(")")].split('W')[0]
-        elif output[0] == '!':
-            if None not in self.snapshot.viewvalues():
-                self.save_snapshot(self.snapshot)
-            self.snapshot = dict.fromkeys(self.snapshot, None)
+        try:
+            if output[0] == '/':
+                self.snapshot['meter_model'] = output[1:]
+            elif output[0:10] == '0-0:96.1.1':
+                self.snapshot['meter_id'] = output[output.find("(")+1:output.find(")")].split('*')[0]
+            elif output[0:9] == '1-0:1.8.1':
+                self.snapshot['offpeak_consumption'] = float(output[output.find("(")+1:output.find(")")].split('*')[0])
+            elif output[0:9] == '1-0:1.8.2':
+                self.snapshot['peak_consumption'] = float(output[output.find("(")+1:output.find(")")].split('*')[0])
+            elif output[0:9] == '1-0:2.8.1':
+                self.snapshot['offpeak_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
+            elif output[0:9] == '1-0:2.8.2':
+                self.snapshot['peak_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
+            elif output[0:9] == '1-0:1.7.0':
+                self.snapshot['live_usage'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
+            elif output[0:9] == '1-0:2.7.0':
+                self.snapshot['live_redelivery'] = float(output[output.find("(") + 1:output.find(")")].split('*')[0])
+            elif output[0:10] == '0-1:24.2.1':
+                parts = re.findall(r"\(([A-Za-z0-9_*.]+)\)", output)
+                self.snapshot['tst_reading_gas'] = parts[0][parts[0].find("(") + 1:parts[0].find(")")].split('W')[0]
+                self.snapshot['gas_consumption'] = float(parts[1][parts[1].find("(") + 1:parts[1].find(")")].split('*')[0])
+            elif output[0:9] == '0-0:1.0.0':
+                self.snapshot['tst_reading_electricity'] = output[output.find("(") + 1:output.find(")")].split('W')[0]
+            elif output[0] == '!':
+                if None not in self.snapshot.viewvalues():
+                    self.save_snapshot(self.snapshot)
+                self.snapshot = dict.fromkeys(self.snapshot, None)
+        except Exception, e:
+            print e
 
     def save_snapshot(self, snapshot):
         conn = db.connect(config.DB_PATH)
