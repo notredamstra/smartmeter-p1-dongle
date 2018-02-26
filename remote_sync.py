@@ -5,8 +5,11 @@ import time, config
 while True:
     conn = db.connect(config.DB_PATH)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM " + config.DB_TABLE_NAME + " WHERE s=0")
-    rows = cur.fetchall()
+    try:
+        cur.execute("SELECT * FROM " + config.DB_TABLE_NAME + " WHERE s=0")
+        rows = cur.fetchall()
+    except db.OperationalError:
+        continue
 
     entries = []
 
